@@ -9,9 +9,9 @@ adguard-home clients list
 ```
 
 ```
-NAME    IDS                       BLOCKED SERVICES  FILTERING
-JUAN    192.168.0.57, 100.83.15   none              on
-VANE    192.168.0.4               none              on
+NAME       IDS                       BLOCKED SERVICES  FILTERING
+Desktop    192.168.1.50, 10.0.0.2    none              on
+Laptop     192.168.1.51              none              on
 ```
 
 ## JSON
@@ -23,8 +23,8 @@ adguard-home clients list -o json
 ```json
 [
   {
-    "name": "JUAN",
-    "ids": ["192.168.0.57", "100.83.15.72"],
+    "name": "Desktop",
+    "ids": ["192.168.1.50", "10.0.0.2"],
     "blocked_services": [],
     "filtering_enabled": true
   }
@@ -38,9 +38,9 @@ adguard-home stats -o yaml
 ```
 
 ```yaml
-num_dns_queries: 782115
-num_blocked_filtering: 125145
-avg_processing_time: 0.1247
+num_dns_queries: 245831
+num_blocked_filtering: 38104
+avg_processing_time: 0.0423
 ```
 
 ## Piping and Scripting

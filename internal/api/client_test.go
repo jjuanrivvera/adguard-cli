@@ -134,15 +134,15 @@ func TestGetClients(t *testing.T) {
 		"GET /control/clients": ClientsResponse{
 			Clients: []ClientEntry{
 				{
-					Name:                    "JUAN",
-					IDs:                     []string{"192.168.0.57", "100.83.15.72"},
+					Name:                    "Desktop",
+					IDs:                     []string{"192.168.1.50", "10.0.0.2"},
 					UseGlobalBlockedServices: false,
 					BlockedServices:         []string{},
 					FilteringEnabled:        true,
 				},
 				{
-					Name:                    "VANE",
-					IDs:                     []string{"192.168.0.4"},
+					Name:                    "Laptop",
+					IDs:                     []string{"192.168.1.51"},
 					UseGlobalBlockedServices: true,
 					FilteringEnabled:        true,
 				},
@@ -153,8 +153,8 @@ func TestGetClients(t *testing.T) {
 	resp, err := client.GetClients()
 	require.NoError(t, err)
 	assert.Len(t, resp.Clients, 2)
-	assert.Equal(t, "JUAN", resp.Clients[0].Name)
-	assert.Equal(t, []string{"192.168.0.57", "100.83.15.72"}, resp.Clients[0].IDs)
+	assert.Equal(t, "Desktop", resp.Clients[0].Name)
+	assert.Equal(t, []string{"192.168.1.50", "10.0.0.2"}, resp.Clients[0].IDs)
 	assert.False(t, resp.Clients[0].UseGlobalBlockedServices)
 	assert.Empty(t, resp.Clients[0].BlockedServices)
 }
@@ -268,7 +268,7 @@ func TestGetQueryLog(t *testing.T) {
 		"GET /control/querylog": QueryLogResponse{
 			Data: []QueryLogEntry{
 				{
-					Client: "192.168.0.57",
+					Client: "192.168.1.50",
 					Status: "NotFilteredNotFound",
 					Reason: "",
 					Time:   "2026-04-03T15:00:00Z",
@@ -285,7 +285,7 @@ func TestGetQueryLog(t *testing.T) {
 	ql, err := client.GetQueryLog(10)
 	require.NoError(t, err)
 	assert.Len(t, ql.Data, 1)
-	assert.Equal(t, "192.168.0.57", ql.Data[0].Client)
+	assert.Equal(t, "192.168.1.50", ql.Data[0].Client)
 }
 
 func TestGetFiltering(t *testing.T) {
@@ -647,12 +647,12 @@ func TestSetFilteringRules(t *testing.T) {
 func TestFindClient(t *testing.T) {
 	_, client := newTestServer(t, map[string]any{
 		"GET /control/clients/find": map[string]any{
-			"192.168.0.57": map[string]any{"name": "JUAN"},
+			"192.168.1.50": map[string]any{"name": "Desktop"},
 		},
 	})
-	result, err := client.FindClient("192.168.0.57")
+	result, err := client.FindClient("192.168.1.50")
 	require.NoError(t, err)
-	assert.Contains(t, result, "192.168.0.57")
+	assert.Contains(t, result, "192.168.1.50")
 }
 
 func TestGetVersionInfo(t *testing.T) {
