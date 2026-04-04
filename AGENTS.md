@@ -32,7 +32,8 @@ adguard-cli/
 │   └── setup.go                 # Interactive first-run wizard
 ├── internal/
 │   ├── api/client.go            # AdGuard Home REST API client (all endpoints)
-│   ├── config/config.go         # Viper config (~/.adguard-cli/config.yaml)
+│   ├── config/config.go         # YAML config (~/.adguard-cli/config.yaml)
+│   ├── config/credentials.go    # Keyring + AES-256-GCM encrypted file credential store
 │   ├── errors/errors.go         # CLIError with Code + Hint pattern
 │   ├── output/formatter.go      # Table/JSON/YAML output formatters
 │   └── cmdutil/util.go          # Infof/Infoln (stderr), HandleError

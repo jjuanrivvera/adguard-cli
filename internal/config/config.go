@@ -139,6 +139,30 @@ func GetCurrentInstance() (*ResolvedInstance, error) {
 	return &ResolvedInstance{URL: inst.URL, Username: inst.Username, Password: password}, nil
 }
 
+// GetNamedInstance returns a specific instance by name from config + credential store.
+func GetNamedInstance(name string) (*ResolvedInstance, error) {
+	cfg, err := Load()
+	if err != nil {
+		return nil, err
+	}
+	if cfg == nil {
+		return nil, nil
+	}
+
+	inst, ok := cfg.Instances[name]
+	if !ok {
+		return nil, nil
+	}
+
+	store := NewCredentialStore()
+	password, err := store.Get(name)
+	if err != nil {
+		return nil, fmt.Errorf("retrieving credentials: %w", err)
+	}
+
+	return &ResolvedInstance{URL: inst.URL, Username: inst.Username, Password: password}, nil
+}
+
 // SaveCredentials stores a password in the credential store.
 func SaveCredentials(instance, password string) error {
 	store := NewCredentialStore()

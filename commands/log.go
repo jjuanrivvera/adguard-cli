@@ -33,10 +33,14 @@ func newLogCmd() *cobra.Command {
 						domain := ""
 						qtype := ""
 						if q, ok := entry.Question["name"]; ok {
-							domain = q.(string)
+							if s, ok := q.(string); ok {
+								domain = s
+							}
 						}
 						if q, ok := entry.Question["type"]; ok {
-							qtype = q.(string)
+							if s, ok := q.(string); ok {
+								qtype = s
+							}
 						}
 						rows = append(rows, []string{
 							entry.Time,

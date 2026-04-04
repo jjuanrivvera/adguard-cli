@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -69,16 +70,6 @@ func (c *Client) get(endpoint string, target any) error {
 	return json.NewDecoder(resp.Body).Decode(target)
 }
 
-func (c *Client) getRaw(endpoint string) ([]byte, error) {
-	resp, err := c.do("GET", endpoint, nil)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	return io.ReadAll(resp.Body)
-}
-
 func (c *Client) post(endpoint string, body any) error {
 	var reader io.Reader
 	if body != nil {
@@ -86,7 +77,7 @@ func (c *Client) post(endpoint string, body any) error {
 		if err != nil {
 			return err
 		}
-		reader = strings.NewReader(string(data))
+		reader = bytes.NewReader(data)
 	}
 
 	resp, err := c.do("POST", endpoint, reader)
@@ -104,7 +95,7 @@ func (c *Client) postAndDecode(endpoint string, body any, target any) error {
 		if err != nil {
 			return err
 		}
-		reader = strings.NewReader(string(data))
+		reader = bytes.NewReader(data)
 	}
 
 	resp, err := c.do("POST", endpoint, reader)

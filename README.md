@@ -181,16 +181,16 @@ instances:
   default:
     url: http://192.168.0.105:8001
     username: admin
-    password: your-password
   secondary:
     url: http://10.0.0.1:3000
     username: admin
-    password: other-password
 current_instance: default
 output:
   format: table
   color: auto
 ```
+
+Passwords are stored in your system keyring (macOS Keychain, GNOME Keyring, KWallet) or in an AES-256-GCM encrypted file as fallback on headless servers. They are never stored in the config YAML.
 
 Switch instances: `adguard-home --instance secondary clients list`
 

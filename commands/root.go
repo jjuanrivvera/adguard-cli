@@ -66,5 +66,20 @@ func getClient() (*api.Client, error) {
 		return nil, clierrors.ConfigNotFound()
 	}
 
+	// Override instance if --instance flag was provided
+	if flags.Instance != "" {
+		named, err := config.GetNamedInstance(flags.Instance)
+		if err != nil {
+			return nil, clierrors.Wrap(clierrors.ConfigError, "loading instance", err)
+		}
+		if named == nil {
+			return nil, clierrors.WithHint(
+				clierrors.New(clierrors.NotFound, "instance '"+flags.Instance+"' not found"),
+				"Check available instances in ~/.adguard-cli/config.yaml",
+			)
+		}
+		inst = named
+	}
+
 	return api.NewClient(inst.URL, inst.Username, inst.Password), nil
 }

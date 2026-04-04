@@ -17,8 +17,7 @@ func Infoln(msg string) {
 	fmt.Fprintln(os.Stderr, msg)
 }
 
-// HandleError prints a formatted error and exits with code 1.
+// HandleError prints a formatted error to stderr.
 func HandleError(err error) {
 	fmt.Fprintln(os.Stderr, clierrors.FormatError(err))
-	os.Exit(1)
 }

@@ -6,8 +6,10 @@ adguard-home-*
 # Go
 vendor/
 
-# Config (contains credentials)
+# Config and credentials
 config.yaml
+credentials.enc*
+coverage.out
 
 # OS
 .DS_Store

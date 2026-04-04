@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"golang.org/x/term"
 
 	"github.com/jjuanrivvera/adguard-cli/internal/api"
 	"github.com/jjuanrivvera/adguard-cli/internal/cmdutil"
@@ -42,10 +43,17 @@ func runSetup(cmd *cobra.Command, args []string) error {
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
 
-	// Password
+	// Password (masked input)
 	cmdutil.Infof("Password: ")
-	password, _ := reader.ReadString('\n')
-	password = strings.TrimSpace(password)
+	passwordBytes, err := term.ReadPassword(int(os.Stdin.Fd()))
+	fmt.Fprintln(os.Stderr) // newline after masked input
+	if err != nil {
+		// Fallback to plain input if terminal is not available (e.g., piped input)
+		cmdutil.Infof("Password (visible): ")
+		pw, _ := reader.ReadString('\n')
+		passwordBytes = []byte(strings.TrimSpace(pw))
+	}
+	password := string(passwordBytes)
 
 	// Test connection
 	cmdutil.Infof("\nTesting connection to %s... ", url)
