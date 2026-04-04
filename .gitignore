@@ -1,6 +1,6 @@
-# Binary
-adguard-home
-adguard-home-*
+# Binary (root level only, not cmd/adguard-home/)
+/adguard-home
+/adguard-home-*
 *.exe
 
 # Go
