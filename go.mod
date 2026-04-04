@@ -2,8 +2,6 @@ module github.com/jjuanrivvera/adguard-cli
 
 go 1.24.0
 
-toolchain go1.25.8
-
 require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.10.2
