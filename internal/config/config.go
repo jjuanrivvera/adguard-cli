@@ -16,7 +16,7 @@ const (
 type Instance struct {
 	URL      string `yaml:"url"`
 	Username string `yaml:"username"`
-	Password string `yaml:"password"`
+	// Password is stored in system keyring or encrypted file, never in config YAML.
 }
 
 type OutputConfig struct {
@@ -97,15 +97,22 @@ func Save(cfg *Config) error {
 	return os.WriteFile(path, data, 0600)
 }
 
+// ResolvedInstance holds the full connection info including the password.
+type ResolvedInstance struct {
+	URL      string
+	Username string
+	Password string
+}
+
 // GetCurrentInstance returns the active instance config, checking env vars first.
-func GetCurrentInstance() (*Instance, error) {
+func GetCurrentInstance() (*ResolvedInstance, error) {
 	// Environment variables take precedence
 	url := os.Getenv("ADGUARD_URL")
 	user := os.Getenv("ADGUARD_USERNAME")
 	pass := os.Getenv("ADGUARD_PASSWORD")
 
 	if url != "" && user != "" && pass != "" {
-		return &Instance{URL: url, Username: user, Password: pass}, nil
+		return &ResolvedInstance{URL: url, Username: user, Password: pass}, nil
 	}
 
 	cfg, err := Load()
@@ -116,10 +123,24 @@ func GetCurrentInstance() (*Instance, error) {
 		return nil, nil
 	}
 
-	inst, ok := cfg.Instances[cfg.CurrentInstance]
+	instanceName := cfg.CurrentInstance
+	inst, ok := cfg.Instances[instanceName]
 	if !ok {
-		return nil, fmt.Errorf("instance %q not found in config", cfg.CurrentInstance)
+		return nil, fmt.Errorf("instance %q not found in config", instanceName)
 	}
 
-	return &inst, nil
+	// Get password from credential store
+	store := NewCredentialStore()
+	password, err := store.Get(instanceName)
+	if err != nil {
+		return nil, fmt.Errorf("retrieving credentials: %w", err)
+	}
+
+	return &ResolvedInstance{URL: inst.URL, Username: inst.Username, Password: password}, nil
+}
+
+// SaveCredentials stores a password in the credential store.
+func SaveCredentials(instance, password string) error {
+	store := NewCredentialStore()
+	return store.Set(instance, password)
 }

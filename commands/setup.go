@@ -78,7 +78,6 @@ func runSetup(cmd *cobra.Command, args []string) error {
 	cfg.Instances[name] = config.Instance{
 		URL:      url,
 		Username: username,
-		Password: password,
 	}
 	cfg.CurrentInstance = name
 
@@ -86,8 +85,14 @@ func runSetup(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("saving config: %w", err)
 	}
 
+	// Store password in system keyring or encrypted file
+	if err := config.SaveCredentials(name, password); err != nil {
+		return fmt.Errorf("saving credentials: %w", err)
+	}
+
 	dir, _ := config.ConfigDir()
 	cmdutil.Infof("\nConfiguration saved to %s/config.yaml\n", dir)
+	cmdutil.Infoln("Password stored in system keyring (or encrypted file as fallback).")
 	cmdutil.Infoln("Run 'adguard-home doctor' to verify everything works.")
 
 	return nil
