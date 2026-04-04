@@ -1,0 +1,20 @@
+# Binary
+adguard-home
+adguard-home-*
+*.exe
+
+# Go
+vendor/
+
+# Config (contains credentials)
+config.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
