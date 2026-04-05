@@ -134,17 +134,17 @@ func TestGetClients(t *testing.T) {
 		"GET /control/clients": ClientsResponse{
 			Clients: []ClientEntry{
 				{
-					Name:                    "Desktop",
-					IDs:                     []string{"192.168.1.50", "10.0.0.2"},
+					Name:                     "Desktop",
+					IDs:                      []string{"192.168.1.50", "10.0.0.2"},
 					UseGlobalBlockedServices: false,
-					BlockedServices:         []string{},
-					FilteringEnabled:        true,
+					BlockedServices:          []string{},
+					FilteringEnabled:         true,
 				},
 				{
-					Name:                    "Laptop",
-					IDs:                     []string{"192.168.1.51"},
+					Name:                     "Laptop",
+					IDs:                      []string{"192.168.1.51"},
 					UseGlobalBlockedServices: true,
-					FilteringEnabled:        true,
+					FilteringEnabled:         true,
 				},
 			},
 		},

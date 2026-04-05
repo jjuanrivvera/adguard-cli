@@ -117,12 +117,12 @@ func runClientsAdd(cmd *cobra.Command, args []string) error {
 
 	ids := strings.Split(args[1], ",")
 	entry := api.ClientEntry{
-		Name:                    args[0],
-		IDs:                     ids,
-		UseGlobalSettings:       true,
+		Name:                     args[0],
+		IDs:                      ids,
+		UseGlobalSettings:        true,
 		UseGlobalBlockedServices: true,
-		FilteringEnabled:        true,
-		SafebrowsingEnabled:     true,
+		FilteringEnabled:         true,
+		SafebrowsingEnabled:      true,
 	}
 
 	if err := client.AddClient(entry); err != nil {

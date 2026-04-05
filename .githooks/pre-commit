@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+echo "Running pre-commit checks..."
+
+# Check formatting
+echo "→ Checking gofmt..."
+UNFORMATTED=$(gofmt -l . 2>&1 | grep -v vendor || true)
+if [ -n "$UNFORMATTED" ]; then
+    echo "✗ Files not formatted:"
+    echo "$UNFORMATTED"
+    echo ""
+    echo "Run 'gofmt -w .' to fix"
+    exit 1
+fi
+echo "✓ Format OK"
+
+# Run go vet
+echo "→ Running go vet..."
+go vet ./...
+echo "✓ Vet OK"
+
+# Run tests (short mode)
+echo "→ Running tests (short)..."
+go test -short ./... > /dev/null 2>&1
+echo "✓ Tests OK"
+
+echo ""
+echo "✓ All pre-commit checks passed!"

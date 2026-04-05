@@ -18,10 +18,10 @@ var flags GlobalFlags
 
 func NewRootCommand(version, commit, date string) *cobra.Command {
 	root := &cobra.Command{
-		Use:   "adguard-home",
-		Short: "The missing CLI for AdGuard Home",
-		Long:  "A command-line interface for managing AdGuard Home DNS filtering.\nSupports clients, blocked services, DNS rewrites, query logs, filters, and more.",
-		Version: version,
+		Use:           "adguard-home",
+		Short:         "The missing CLI for AdGuard Home",
+		Long:          "A command-line interface for managing AdGuard Home DNS filtering.\nSupports clients, blocked services, DNS rewrites, query logs, filters, and more.",
+		Version:       version,
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}

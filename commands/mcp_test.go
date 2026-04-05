@@ -56,8 +56,8 @@ func TestMCPTools_ExportAndValidate(t *testing.T) {
 	// Find and execute mcp tools command
 	tmpDir := t.TempDir()
 	origDir, _ := os.Getwd()
-	os.Chdir(tmpDir)
-	defer os.Chdir(origDir)
+	require.NoError(t, os.Chdir(tmpDir))
+	defer func() { _ = os.Chdir(origDir) }()
 
 	root.SetArgs([]string{"mcp", "tools"})
 	err := root.Execute()
@@ -87,8 +87,8 @@ func TestMCPTools_DestructiveCommandsExcluded(t *testing.T) {
 
 	tmpDir := t.TempDir()
 	origDir, _ := os.Getwd()
-	os.Chdir(tmpDir)
-	defer os.Chdir(origDir)
+	require.NoError(t, os.Chdir(tmpDir))
+	defer func() { _ = os.Chdir(origDir) }()
 
 	root.SetArgs([]string{"mcp", "tools"})
 	err := root.Execute()
@@ -114,8 +114,8 @@ func TestMCPTools_SensitiveFlagsExcluded(t *testing.T) {
 
 	tmpDir := t.TempDir()
 	origDir, _ := os.Getwd()
-	os.Chdir(tmpDir)
-	defer os.Chdir(origDir)
+	require.NoError(t, os.Chdir(tmpDir))
+	defer func() { _ = os.Chdir(origDir) }()
 
 	root.SetArgs([]string{"mcp", "tools"})
 	err := root.Execute()

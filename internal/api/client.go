@@ -116,12 +116,12 @@ func (c *Client) Ping() error {
 // --- Status ---
 
 type ServerStatus struct {
-	DNSAddresses    []string `json:"dns_addresses"`
-	DNSPort         int      `json:"dns_port"`
-	HTTPPort        int      `json:"http_port"`
-	ProtectionEnabled bool   `json:"protection_enabled"`
-	Running         bool     `json:"running"`
-	Version         string   `json:"version"`
+	DNSAddresses      []string `json:"dns_addresses"`
+	DNSPort           int      `json:"dns_port"`
+	HTTPPort          int      `json:"http_port"`
+	ProtectionEnabled bool     `json:"protection_enabled"`
+	Running           bool     `json:"running"`
+	Version           string   `json:"version"`
 }
 
 func (c *Client) GetStatus() (*ServerStatus, error) {
@@ -140,15 +140,15 @@ func (c *Client) SetProtection(enabled bool) error {
 // --- Stats ---
 
 type Stats struct {
-	NumDNSQueries           int      `json:"num_dns_queries"`
-	NumBlockedFiltering     int      `json:"num_blocked_filtering"`
-	NumReplacedSafebrowsing int      `json:"num_replaced_safebrowsing"`
-	NumReplacedParental     int      `json:"num_replaced_parental"`
-	AvgProcessingTime       float64  `json:"avg_processing_time"`
+	NumDNSQueries           int              `json:"num_dns_queries"`
+	NumBlockedFiltering     int              `json:"num_blocked_filtering"`
+	NumReplacedSafebrowsing int              `json:"num_replaced_safebrowsing"`
+	NumReplacedParental     int              `json:"num_replaced_parental"`
+	AvgProcessingTime       float64          `json:"avg_processing_time"`
 	TopQueriedDomains       []map[string]int `json:"top_queried_domains"`
 	TopClients              []map[string]int `json:"top_clients"`
 	TopBlockedDomains       []map[string]int `json:"top_blocked_domains"`
-	TimeUnits               string   `json:"time_units"`
+	TimeUnits               string           `json:"time_units"`
 }
 
 func (c *Client) GetStats() (*Stats, error) {
@@ -163,16 +163,16 @@ func (c *Client) ResetStats() error {
 // --- Clients ---
 
 type ClientEntry struct {
-	Name                    string   `json:"name"`
-	IDs                     []string `json:"ids"`
-	Tags                    []string `json:"tags"`
-	UseGlobalSettings       bool     `json:"use_global_settings"`
-	UseGlobalBlockedServices bool    `json:"use_global_blocked_services"`
-	BlockedServices         []string `json:"blocked_services"`
-	FilteringEnabled        bool     `json:"filtering_enabled"`
-	ParentalEnabled         bool     `json:"parental_enabled"`
-	SafebrowsingEnabled     bool     `json:"safebrowsing_enabled"`
-	Upstreams               []string `json:"upstreams"`
+	Name                     string   `json:"name"`
+	IDs                      []string `json:"ids"`
+	Tags                     []string `json:"tags"`
+	UseGlobalSettings        bool     `json:"use_global_settings"`
+	UseGlobalBlockedServices bool     `json:"use_global_blocked_services"`
+	BlockedServices          []string `json:"blocked_services"`
+	FilteringEnabled         bool     `json:"filtering_enabled"`
+	ParentalEnabled          bool     `json:"parental_enabled"`
+	SafebrowsingEnabled      bool     `json:"safebrowsing_enabled"`
+	Upstreams                []string `json:"upstreams"`
 }
 
 type ClientsResponse struct {
@@ -291,12 +291,12 @@ type FilterStatus struct {
 }
 
 type Filter struct {
-	ID         int    `json:"id"`
-	Enabled    bool   `json:"enabled"`
+	ID          int    `json:"id"`
+	Enabled     bool   `json:"enabled"`
 	LastUpdated string `json:"last_updated"`
-	Name       string `json:"name"`
-	RulesCount int    `json:"rules_count"`
-	URL        string `json:"url"`
+	Name        string `json:"name"`
+	RulesCount  int    `json:"rules_count"`
+	URL         string `json:"url"`
 }
 
 func (c *Client) GetFiltering() (*FilterStatus, error) {
@@ -498,21 +498,21 @@ func (c *Client) SetAccessList(a AccessList) error {
 // --- DNS Config ---
 
 type DNSConfig struct {
-	UpstreamDNS           []string `json:"upstream_dns"`
-	BootstrapDNS          []string `json:"bootstrap_dns"`
-	FallbackDNS           []string `json:"fallback_dns"`
-	ProtectionEnabled     bool     `json:"protection_enabled"`
-	RateLimit             int      `json:"ratelimit"`
-	BlockingMode          string   `json:"blocking_mode"`
-	EDNSCSEnabled         bool     `json:"edns_cs_enabled"`
-	DNSSECEnabled         bool     `json:"dnssec_enabled"`
-	DisableIPv6           bool     `json:"disable_ipv6"`
-	UpstreamMode          string   `json:"upstream_mode"`
-	CacheSize             int      `json:"cache_size"`
-	CacheMinTTL           int      `json:"cache_ttl_min"`
-	CacheMaxTTL           int      `json:"cache_ttl_max"`
-	CacheOptimistic       bool     `json:"cache_optimistic"`
-	UsePrivatePTRResolvers bool    `json:"use_private_ptr_resolvers"`
+	UpstreamDNS            []string `json:"upstream_dns"`
+	BootstrapDNS           []string `json:"bootstrap_dns"`
+	FallbackDNS            []string `json:"fallback_dns"`
+	ProtectionEnabled      bool     `json:"protection_enabled"`
+	RateLimit              int      `json:"ratelimit"`
+	BlockingMode           string   `json:"blocking_mode"`
+	EDNSCSEnabled          bool     `json:"edns_cs_enabled"`
+	DNSSECEnabled          bool     `json:"dnssec_enabled"`
+	DisableIPv6            bool     `json:"disable_ipv6"`
+	UpstreamMode           string   `json:"upstream_mode"`
+	CacheSize              int      `json:"cache_size"`
+	CacheMinTTL            int      `json:"cache_ttl_min"`
+	CacheMaxTTL            int      `json:"cache_ttl_max"`
+	CacheOptimistic        bool     `json:"cache_optimistic"`
+	UsePrivatePTRResolvers bool     `json:"use_private_ptr_resolvers"`
 }
 
 func (c *Client) GetDNSConfig() (*DNSConfig, error) {
