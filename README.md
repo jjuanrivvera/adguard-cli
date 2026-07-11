@@ -12,6 +12,12 @@ Built for homelab operators, sysadmins, and anyone who automates their DNS infra
 
 ## Install
 
+### Install script (macOS / Linux)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jjuanrivvera/adguard-cli/main/install.sh | sh
+```
+
 ### Homebrew (macOS / Linux)
 
 ```bash
