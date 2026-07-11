@@ -1,6 +1,6 @@
 module github.com/jjuanrivvera/adguard-cli
 
-go 1.24.6
+go 1.25.12
 
 require (
 	github.com/njayp/ophis v1.1.4
