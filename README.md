@@ -1,5 +1,7 @@
 # adguard-cli
 
+> 🏭 Part of the [cliwright](https://cliwright.jjuanrivvera.com) CLI fleet.
+
 The missing command-line interface for [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome).
 
 Manage your AdGuard Home instance from the terminal: clients, blocked services, DNS rewrites, query logs, filters, DHCP, TLS, and more. Full API coverage with structured output.
@@ -261,10 +263,6 @@ GOOS=linux GOARCH=amd64 go build -o adguard-home-linux-amd64 ./cmd/adguard-home/
 # Windows
 GOOS=windows GOARCH=amd64 go build -o adguard-home.exe ./cmd/adguard-home/
 ```
-
-## Built with cliwright
-
-Part of a fleet of single-purpose CLIs generated with [cliwright](https://cliwright.jjuanrivvera.com) — browse them all at **[cliwright.jjuanrivvera.com](https://cliwright.jjuanrivvera.com)**.
 
 ## License
 
