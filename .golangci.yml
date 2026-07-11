@@ -1,0 +1,11 @@
+# golangci-lint v2 configuration.
+# Uses the standard linter set (errcheck, govet, ineffassign, staticcheck, unused).
+# The std-error-handling exclusion preset restores v1's default behavior of not
+# flagging unchecked errors on idiomatic calls (Close, Fprintln, etc.) — this is a
+# behavior-preserving v1->v2 migration, not a new stricter error-checking policy.
+version: "2"
+linters:
+  default: standard
+  exclusions:
+    presets:
+      - std-error-handling
