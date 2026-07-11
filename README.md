@@ -12,15 +12,27 @@ Built for homelab operators, sysadmins, and anyone who automates their DNS infra
 
 ## Install
 
-### From source
+### Homebrew (macOS / Linux)
+
+```bash
+brew install jjuanrivvera/adguard-cli/adguard-cli
+```
+
+### Scoop (Windows)
+
+```powershell
+scoop install https://raw.githubusercontent.com/jjuanrivvera/scoop-adguard-cli/main/adguard-cli.json
+```
+
+### Go
 
 ```bash
 go install github.com/jjuanrivvera/adguard-cli/cmd/adguard-home@latest
 ```
 
-### From binary
+### Binary
 
-Download the latest release from the [Releases](https://github.com/jjuanrivvera/adguard-cli/releases) page.
+Download the latest release from the [Releases](https://github.com/jjuanrivvera/adguard-cli/releases) page (deb/rpm/apk and archives for Linux, macOS, and Windows).
 
 ## Quick Start
 

@@ -73,6 +73,17 @@ brews:
     test: |
       system "#{bin}/adguard-home", "--version"
 
+scoops:
+  # The bucket repo (scoop-adguard-cli) must already exist; GoReleaser pushes to it
+  # with the cross-repo token but won't create it.
+  - repository:
+      owner: jjuanrivvera
+      name: scoop-adguard-cli
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: "https://github.com/jjuanrivvera/adguard-cli"
+    description: "The missing command-line interface for AdGuard Home"
+    license: MIT
+
 release:
   github:
     owner: jjuanrivvera
