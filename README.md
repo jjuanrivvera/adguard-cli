@@ -262,6 +262,10 @@ GOOS=linux GOARCH=amd64 go build -o adguard-home-linux-amd64 ./cmd/adguard-home/
 GOOS=windows GOARCH=amd64 go build -o adguard-home.exe ./cmd/adguard-home/
 ```
 
+## Built with cliwright
+
+Part of a fleet of single-purpose CLIs generated with [cliwright](https://cliwright.jjuanrivvera.com) — browse them all at **[cliwright.jjuanrivvera.com](https://cliwright.jjuanrivvera.com)**.
+
 ## License
 
 MIT
