@@ -1,35 +1,20 @@
+# CI — delegates to the fleet-canonical reusable workflow in jjuanrivvera/.github.
+# Change fleet-wide CI policy there, not here. Repo-specific inputs only live below.
 name: CI
 
 on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
 
-env:
-  # auto (not local) so Go can fetch the toolchain the go.mod directive requires
-  GOTOOLCHAIN: auto
+permissions:
+  contents: read
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 'stable'
-      - name: Build
-        run: go build -o /dev/null ./cmd/adguard-home/
-      - name: Test
-        run: go test -race -v ./...
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 'stable'
-      - uses: golangci/golangci-lint-action@v9
-        with:
-          version: v2.12.2
+  ci:
+    uses: jjuanrivvera/.github/.github/workflows/go-ci.yml@main
+    with:
+      coverage-threshold: ""          # no scripts/cover-check.sh gate in this repo yet
+      run-gosec: false                # never run historically; enable in a follow-up once clean
+      run-docs-check: false           # no generated command docs / docs-gen target
+      os-matrix: '["ubuntu-latest"]'  # keep single-OS as before; expand once cross-platform is verified
