@@ -1,6 +1,23 @@
+<div align="center">
+
 # adguard-cli
 
-> 🏭 Part of the [cliwright](https://cliwright.jjuanrivvera.com) CLI fleet.
+[![CI](https://github.com/jjuanrivvera/adguard-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/jjuanrivvera/adguard-cli/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/jjuanrivvera/adguard-cli)](https://github.com/jjuanrivvera/adguard-cli/releases/latest)
+[![Coverage](https://img.shields.io/badge/coverage-%E2%89%A580%25-brightgreen)](https://github.com/jjuanrivvera/adguard-cli/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/jjuanrivvera/adguard-cli.svg)](https://pkg.go.dev/github.com/jjuanrivvera/adguard-cli)
+[![Go version](https://img.shields.io/github/go-mod/go-version/jjuanrivvera/adguard-cli)](go.mod)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jjuanrivvera/adguard-cli)
+[![Built with cliwright](https://img.shields.io/badge/built_with-cliwright-1f6feb)](https://cliwright.jjuanrivvera.com)
+
+**The missing command-line interface for [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) (binary: `adguard-home`).**
+
+[Documentation](https://jjuanrivvera.github.io/adguard-cli/) · [Commands](https://jjuanrivvera.github.io/adguard-cli/commands/)
+
+</div>
+
+---
 
 The missing command-line interface for [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome).
 
