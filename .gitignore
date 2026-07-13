@@ -6,6 +6,9 @@
 # Go
 vendor/
 
+# GoReleaser build output
+dist/
+
 # Config and credentials
 config.yaml
 credentials.enc*

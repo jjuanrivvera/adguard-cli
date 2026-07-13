@@ -28,11 +28,11 @@ builds:
 
 archives:
   - id: default
-    format: tar.gz
+    formats: [tar.gz]
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [zip]
 
 checksum:
   name_template: "checksums.txt"
@@ -58,20 +58,24 @@ changelog:
       - "^chore:"
       - "^ci:"
 
-brews:
+# homebrew_casks (not the deprecated `brews`): casks are the modern GoReleaser path for a
+# pre-built binary and match the rest of the fleet. NOTE: this switches the tap artifact from a
+# Formula to a Cask — delete the stale Formula/adguard-cli.rb from homebrew-adguard-cli after the
+# first cask release, or brew sees a formula+cask name collision.
+homebrew_casks:
   - name: adguard-cli
+    binaries: [adguard-home]
     repository:
       owner: jjuanrivvera
       name: homebrew-adguard-cli
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    directory: Formula
     homepage: "https://github.com/jjuanrivvera/adguard-cli"
     description: "The missing command-line interface for AdGuard Home"
-    license: "MIT"
-    install: |
-      bin.install "adguard-home"
-    test: |
-      system "#{bin}/adguard-home", "--version"
+    # Strip the macOS quarantine xattr so the unsigned CLI binary runs without a Gatekeeper prompt.
+    hooks:
+      post:
+        install: |
+          system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/adguard-home"]
 
 scoops:
   # The bucket repo (scoop-adguard-cli) must already exist; GoReleaser pushes to it
