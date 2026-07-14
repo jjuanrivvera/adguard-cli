@@ -49,6 +49,9 @@ markdown_extensions:
       permalink: true
 
 extra:
+  analytics:
+    provider: google
+    property: G-9HY9P7C366
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/jjuanrivvera/adguard-cli
