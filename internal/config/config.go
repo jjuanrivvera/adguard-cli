@@ -168,3 +168,13 @@ func SaveCredentials(instance, password string) error {
 	store := NewCredentialStore()
 	return store.Set(instance, password)
 }
+
+// DeleteCredentials removes an instance's stored password from the credential store.
+func DeleteCredentials(instance string) error {
+	return NewCredentialStore().Delete(instance)
+}
+
+// Path returns the config file path (~/.adguard-cli/config.yaml).
+func Path() (string, error) {
+	return configPath()
+}

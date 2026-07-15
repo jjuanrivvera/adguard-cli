@@ -12,6 +12,7 @@ import (
 type GlobalFlags struct {
 	OutputFormat string
 	Instance     string
+	Profile      string
 }
 
 var flags GlobalFlags
@@ -28,6 +29,8 @@ func NewRootCommand(version, commit, date string) *cobra.Command {
 
 	root.PersistentFlags().StringVarP(&flags.OutputFormat, "output", "o", "table", "Output format: table, json, yaml")
 	root.PersistentFlags().StringVar(&flags.Instance, "instance", "", "AdGuard Home instance name from config (default: current_instance)")
+	root.PersistentFlags().StringVar(&flags.Profile, "profile", "", "alias for --instance")
+	_ = root.PersistentFlags().MarkHidden("profile")
 
 	root.AddCommand(
 		newStatusCmd(),
@@ -48,6 +51,7 @@ func NewRootCommand(version, commit, date string) *cobra.Command {
 		newSelfUpdateCmd(version),
 		newDoctorCmd(),
 		newSetupCmd(),
+		newConfigCmd(),
 		newMCPCmd(),
 	)
 
@@ -56,6 +60,16 @@ func NewRootCommand(version, commit, date string) *cobra.Command {
 
 func getFormat() output.Format {
 	return output.ParseFormat(flags.OutputFormat)
+}
+
+// selectedInstance returns the instance requested for this invocation via --instance,
+// falling back to its --profile alias (kept for vocabulary parity with the rest of the CLI
+// fleet). Empty means "use the configured current_instance".
+func selectedInstance() string {
+	if flags.Instance != "" {
+		return flags.Instance
+	}
+	return flags.Profile
 }
 
 func getClient() (*api.Client, error) {
@@ -67,16 +81,16 @@ func getClient() (*api.Client, error) {
 		return nil, clierrors.ConfigNotFound()
 	}
 
-	// Override instance if --instance flag was provided
-	if flags.Instance != "" {
-		named, err := config.GetNamedInstance(flags.Instance)
+	// Override instance if --instance (or its --profile alias) was provided
+	if name := selectedInstance(); name != "" {
+		named, err := config.GetNamedInstance(name)
 		if err != nil {
 			return nil, clierrors.Wrap(clierrors.ConfigError, "loading instance", err)
 		}
 		if named == nil {
 			return nil, clierrors.WithHint(
-				clierrors.New(clierrors.NotFound, "instance '"+flags.Instance+"' not found"),
-				"Check available instances in ~/.adguard-cli/config.yaml",
+				clierrors.New(clierrors.NotFound, "instance '"+name+"' not found"),
+				"Run `adguard-home config list` to see configured instances.",
 			)
 		}
 		inst = named

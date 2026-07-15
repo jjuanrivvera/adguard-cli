@@ -23,6 +23,7 @@ Supports clients, blocked services, DNS rewrites, query logs, filters, and more.
 
 * [adguard-home access](adguard-home_access.md)	 - Manage access control lists (allowed/disallowed clients and blocked domains)
 * [adguard-home clients](adguard-home_clients.md)	 - Manage AdGuard Home clients
+* [adguard-home config](adguard-home_config.md)	 - View and manage configured instances (profiles)
 * [adguard-home dhcp](adguard-home_dhcp.md)	 - Manage DHCP server
 * [adguard-home dns](adguard-home_dns.md)	 - Manage DNS server configuration
 * [adguard-home doctor](adguard-home_doctor.md)	 - Run diagnostic checks against your AdGuard Home instance

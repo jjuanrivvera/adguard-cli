@@ -110,7 +110,8 @@ adguard-home clients list -o json | jq '.[].name'
 | `server upgrade` | Update the AdGuard Home server |
 | `update` | Update the adguard-home CLI itself |
 | `doctor` | Run diagnostic checks |
-| `setup` | Interactive configuration wizard |
+| `setup` | Interactive wizard: add an instance (URL, user, password) |
+| `config` | List, switch, view, and remove configured instances |
 
 ## Output Formats
 
@@ -212,25 +213,45 @@ adguard-home dhcp add-lease "AA:BB:CC:DD:EE:FF" "192.168.0.50" "my-server"
 
 ## Configuration
 
-Config lives at `~/.adguard-cli/config.yaml`:
+Add an instance with the interactive wizard — it prompts for the URL, username, password, and an instance name:
+
+```bash
+adguard-home setup
+```
+
+adguard-cli is **multi-instance**: configure as many AdGuard Home servers as you want (home, office, a client's box) and switch between them. Manage them with `config`:
+
+```bash
+adguard-home config list            # list instances (the active one is marked with *)
+adguard-home config view            # details: name, URL, username, active
+adguard-home config use office      # switch the active instance
+adguard-home config remove office   # delete an instance and its stored password
+adguard-home config path            # print the config file location
+```
+
+To run a single command against a non-active instance without switching, use `--instance` (or its `--profile` alias):
+
+```bash
+adguard-home --instance office clients list
+```
+
+Config lives at `~/.adguard-cli/config.yaml`, managed by `setup` and `config` (you rarely edit it by hand):
 
 ```yaml
 instances:
-  default:
+  home:
     url: http://192.168.0.105:8001
     username: admin
-  secondary:
+  office:
     url: http://10.0.0.1:3000
     username: admin
-current_instance: default
+current_instance: home
 output:
   format: table
   color: auto
 ```
 
-Passwords are stored in your system keyring (macOS Keychain, GNOME Keyring, KWallet) or in an AES-256-GCM encrypted file as fallback on headless servers. They are never stored in the config YAML.
-
-Switch instances: `adguard-home --instance secondary clients list`
+Passwords are **never** stored in the YAML — they live in your system keyring (macOS Keychain, GNOME Keyring, KWallet), with an AES-256-GCM encrypted file as fallback on headless servers.
 
 ### Environment Variables
 
