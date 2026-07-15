@@ -9,8 +9,21 @@ import (
 	"github.com/jjuanrivvera/adguard-cli/internal/output"
 )
 
-func newVersionCmd() *cobra.Command {
+// newServerCmd groups commands that act on the AdGuard Home SERVER itself. Its subcommands
+// were previously top-level `check-update` and `update`; they moved under `server` so the
+// fleet-standard top-level `update` can mean "update this CLI binary" (see update.go).
+func newServerCmd() *cobra.Command {
 	cmd := &cobra.Command{
+		Use:   "server",
+		Short: "Manage the AdGuard Home server (upgrade, check for updates)",
+	}
+	cmd.AddCommand(newServerUpgradeCmd(), newServerCheckUpdateCmd())
+	return cmd
+}
+
+// newServerCheckUpdateCmd was the top-level `check-update` command.
+func newServerCheckUpdateCmd() *cobra.Command {
+	return &cobra.Command{
 		Use:   "check-update",
 		Short: "Check if a new version of AdGuard Home is available",
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -42,14 +55,14 @@ func newVersionCmd() *cobra.Command {
 			)
 		},
 	}
-
-	return cmd
 }
 
-func newUpdateCmd() *cobra.Command {
+// newServerUpgradeCmd was the top-level `update` command (renamed to free `update` for the
+// CLI self-updater). It triggers AdGuard Home's own server-side update over the REST API.
+func newServerUpgradeCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "update",
-		Short: "Update AdGuard Home to the latest version",
+		Use:   "upgrade",
+		Short: "Update the AdGuard Home server to the latest version",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client, err := getClient()
 			if err != nil {

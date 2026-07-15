@@ -106,8 +106,9 @@ adguard-home clients list -o json | jq '.[].name'
 | `parental` | Enable/disable parental control |
 | `safesearch` | Safe search enforcement per engine |
 | `access` | Allowed/disallowed clients and blocked hosts |
-| `check-update` | Check for AdGuard Home updates |
-| `update` | Trigger AdGuard Home update |
+| `server check-update` | Check for AdGuard Home server updates |
+| `server upgrade` | Update the AdGuard Home server |
+| `update` | Update the adguard-home CLI itself |
 | `doctor` | Run diagnostic checks |
 | `setup` | Interactive configuration wizard |
 

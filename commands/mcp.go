@@ -10,8 +10,10 @@ func newMCPCmd() *cobra.Command {
 		ToolNamePrefix: "adguard",
 		Selectors: []ophis.Selector{
 			{
-				// Exclude destructive commands from MCP exposure
-				CmdSelector: ophis.ExcludeCmdsContaining("reset", "update"),
+				// Exclude destructive commands from MCP exposure. "update" now covers the CLI
+				// self-updater (`update`) + `server check-update`; "upgrade" covers `server upgrade`
+				// (the server-side update, previously the top-level `update`).
+				CmdSelector: ophis.ExcludeCmdsContaining("reset", "update", "upgrade"),
 				// Exclude sensitive inherited flags
 				InheritedFlagSelector: ophis.ExcludeFlags("instance"),
 			},
