@@ -20,10 +20,11 @@ Auto-generated from the CLI source code. Run `adguard-home [command] --help` for
 | [parental](adguard-home_parental.md) | Enable/disable parental control |
 | [safesearch](adguard-home_safesearch.md) | Safe search enforcement per engine |
 | [access](adguard-home_access.md) | Allowed/disallowed clients and blocked hosts |
-| [check-update](adguard-home_check-update.md) | Check for AdGuard Home updates |
-| [update](adguard-home_update.md) | Trigger AdGuard Home update |
+| [server](adguard-home_server.md) | Manage the AdGuard Home server (upgrade, check for updates) |
+| [update](adguard-home_update.md) | Update the adguard-home CLI to the latest release |
 | [doctor](adguard-home_doctor.md) | Run diagnostic checks |
-| [setup](adguard-home_setup.md) | Interactive configuration wizard |
+| [setup](adguard-home_setup.md) | Interactive wizard: add an instance |
+| [config](adguard-home_config.md) | View and manage configured instances |
 
 ## Global Flags
 
