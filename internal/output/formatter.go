@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"gopkg.in/yaml.v3"
 )
 
@@ -45,20 +46,25 @@ func PrintYAML(data any) error {
 
 // PrintTable outputs data as a formatted table to stdout.
 func PrintTable(headers []string, rows [][]string) {
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader(headers)
-	table.SetBorder(false)
-	table.SetAutoWrapText(false)
-	table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
-	table.SetAlignment(tablewriter.ALIGN_LEFT)
-	table.SetCenterSeparator("")
-	table.SetColumnSeparator("")
-	table.SetRowSeparator("")
-	table.SetHeaderLine(true)
-	table.SetTablePadding("  ")
-	table.SetNoWhiteSpace(true)
-	table.AppendBulk(rows)
-	table.Render()
+	// tablewriter v1 replaces the v0 setters with functional options; this reproduces the old
+	// look: no borders or column separators, a header line, left-aligned unwrapped cells.
+	table := tablewriter.NewTable(os.Stdout,
+		tablewriter.WithRendition(tw.Rendition{
+			Borders: tw.BorderNone,
+			Settings: tw.Settings{
+				Separators: tw.Separators{BetweenRows: tw.Off, BetweenColumns: tw.Off},
+				Lines:      tw.Lines{ShowTop: tw.Off, ShowBottom: tw.Off, ShowHeaderLine: tw.On},
+			},
+		}),
+		tablewriter.WithHeaderAutoWrap(tw.WrapNone),
+		tablewriter.WithRowAutoWrap(tw.WrapNone),
+		tablewriter.WithHeaderAlignment(tw.AlignLeft),
+		tablewriter.WithRowAlignment(tw.AlignLeft),
+		tablewriter.WithPadding(tw.Padding{Right: "  "}),
+	)
+	table.Header(headers)
+	_ = table.Bulk(rows)
+	_ = table.Render()
 }
 
 // Print dispatches to the correct formatter based on format string.
