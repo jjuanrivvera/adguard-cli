@@ -55,6 +55,10 @@ func NewRootCommand(version, commit, date string) *cobra.Command {
 		newMCPCmd(),
 	)
 
+	// Must run after the tree is complete: ophis reads cmd.Annotations when the mcp
+	// subcommand runs, and a host in read-only mode drops a server with no read-only tool.
+	applyMCPAnnotations(root)
+
 	return root
 }
 
