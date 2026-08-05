@@ -14,36 +14,33 @@ import (
 // annotated the host finds no allowed tool and drops the entire server, so every command
 // has to declare itself.
 //
-// Classification is by leaf verb and is fail-safe: only the explicit read allowlist is
-// advertised read-only. Everything else — known mutations (add, enable, block, refresh)
-// and any verb added later that this file has not seen — is a write. A miss costs an
-// approval prompt, never a silently auto-approved mutation.
+// Classification is by leaf verb and is fail-safe: only the verbs isReadVerb recognises are
+// advertised read-only. Everything else — known mutations (add, enable, block, refresh) and
+// any verb added later that this file has not seen — is a write. A miss costs an approval
+// prompt, never a silently auto-approved mutation.
 //
 // The setup/config/update commands need no special handling here: newMCPCmd already keeps
 // them off the MCP surface entirely. If that exclusion is ever relaxed they fall to the
 // write default, which is the safe direction.
 
-// readVerbs are leaf command names that only read state.
-var readVerbs = map[string]bool{
-	"list":       true,
-	"find":       true,
-	"status":     true,
-	"stats":      true,
-	"check":      true,
-	"log":        true,
-	"doctor":     true,
-	"leases":     true,
-	"interfaces": true,
-	"blocked":    true,
+// isReadVerb reports whether a leaf command name only reads state.
+func isReadVerb(name string) bool {
+	switch name {
+	case "list", "find", "status", "stats", "check", "log", "doctor",
+		"leases", "interfaces", "blocked":
+		return true
+	}
+	return false
 }
 
-// destructiveVerbs are mutations that cannot be undone from the CLI — the removed entry is
-// gone and has to be re-created by hand.
-var destructiveVerbs = map[string]bool{
-	"delete":       true,
-	"remove":       true,
-	"remove-lease": true,
-	"cache-clear":  true,
+// isDestructiveVerb reports whether a leaf command name is a mutation that cannot be undone
+// from the CLI — the removed entry is gone and has to be re-created by hand.
+func isDestructiveVerb(name string) bool {
+	switch name {
+	case "delete", "remove", "remove-lease", "cache-clear":
+		return true
+	}
+	return false
 }
 
 // applyMCPAnnotations stamps hints on every command in the tree. Call it once, after the
@@ -54,9 +51,9 @@ func applyMCPAnnotations(root *cobra.Command) {
 			return
 		}
 		switch {
-		case destructiveVerbs[cmd.Name()]:
+		case isDestructiveVerb(cmd.Name()):
 			setMCPAnnotations(cmd, false, true)
-		case readVerbs[cmd.Name()]:
+		case isReadVerb(cmd.Name()):
 			setMCPAnnotations(cmd, true, false)
 		default:
 			setMCPAnnotations(cmd, false, false)
