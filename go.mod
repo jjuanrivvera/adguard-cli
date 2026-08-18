@@ -2,6 +2,8 @@ module github.com/jjuanrivvera/adguard-cli
 
 go 1.25.12
 
+toolchain go1.25.13
+
 require (
 	github.com/njayp/ophis v1.1.4
 	github.com/olekukonko/tablewriter v1.1.4
