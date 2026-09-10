@@ -1,6 +1,6 @@
 module github.com/jjuanrivvera/adguard-cli
 
-go 1.25.12
+go 1.26.8
 
 toolchain go1.25.13
 
