@@ -38,6 +38,22 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
+sboms:
+  - artifacts: archive          # syft SBOMs
+
+signs:                          # cosign keyless (needs CI OIDC: permissions id-token: write)
+  - cmd: cosign
+    artifacts: checksum
+    output: true
+    args:
+      [
+        "sign-blob",
+        "--yes",
+        "--output-signature=${signature}",
+        "--output-certificate=${certificate}",
+        "${artifact}",
+      ]
+
 changelog:
   sort: asc
   groups:
