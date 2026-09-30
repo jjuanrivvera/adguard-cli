@@ -15,6 +15,8 @@
 
 [Documentation](https://jjuanrivvera.github.io/adguard-cli/) · [Commands](https://jjuanrivvera.github.io/adguard-cli/commands/)
 
+![adguard-home in action](assets/demo.gif)
+
 </div>
 
 ---
