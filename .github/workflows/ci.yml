@@ -14,7 +14,7 @@ jobs:
   ci:
     uses: jjuanrivvera/.github/.github/workflows/go-ci.yml@main
     with:
-      coverage-threshold: ""          # no scripts/cover-check.sh gate in this repo yet
+      coverage-threshold: "30"        # ratchet: raise it as coverage grows, never lower it
       run-gosec: false                # never run historically; enable in a follow-up once clean
       run-docs-check: false           # no generated command docs / docs-gen target
       os-matrix: '["ubuntu-latest"]'  # run-build now on (default): .goreleaser.yml modernized to homebrew_casks
