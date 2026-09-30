@@ -6,6 +6,10 @@
 # Go
 vendor/
 
+# Local build output. The Makefile builds to the repository root, but the demo
+# tape builds to bin/ so the recording can put it on PATH.
+bin/
+
 # GoReleaser build output
 dist/
 
