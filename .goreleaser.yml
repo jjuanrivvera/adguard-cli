@@ -90,8 +90,8 @@ homebrew_casks:
     # Strip the macOS quarantine xattr so the unsigned CLI binary runs without a Gatekeeper prompt.
     hooks:
       post:
-        install: |
-          system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/adguard-home"]
+        install_steps: |
+          run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{ .StagedPath }}/adguard-home"]
 
 scoops:
   # The bucket repo (scoop-adguard-cli) must already exist; GoReleaser pushes to it
